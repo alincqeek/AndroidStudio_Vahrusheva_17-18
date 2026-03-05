@@ -5,9 +5,16 @@ import kotlin.random.Random
 
 
 class WeatherRepository{
-    suspend fun fetchTemperature(): Int{
+    private var shouldFail = false
+    fun toggleErrorSimulation(){
+        shouldFail = !shouldFail
+    }
+    suspend fun fetchTemperature(): Int {
         delay(2000)
-        return Random.nextInt(15,35)
+        if (shouldFail){
+            throw Exception("Сервер недоступен")
+        }
+        return Random.nextInt(15, 35)
     }
 
     suspend fun fetchHumidity(): Int{
