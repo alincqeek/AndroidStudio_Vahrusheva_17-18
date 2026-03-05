@@ -87,6 +87,26 @@ fun WeatherDashboardScreen(
             value = weatherState.windSpeed?.let{" $it m/s"}?:"-",
             isLoading = weatherState.isLoading && weatherState.windSpeed == null
         )
+
+        if (weatherState.weatherIndex != null){
+            WeatherCard(
+                emoji = "📊",
+                title = "Weather Index",
+                value = "${weatherState.weatherIndex}",
+                isLoading = false
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Text(
+                text = "🔃 Auto-refresh every 10s",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.tertiary
+            )
+        }
+
         Button(
             onClick = { viewModel.loadWeatherData() },
             enabled = !weatherState.isLoading
